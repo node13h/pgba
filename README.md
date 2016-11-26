@@ -14,18 +14,25 @@ Only CentOS7 is supported at the moment
     optional arguments:
       -h, --help            show this help message and exit
       --pg-archivecleanup PG_ARCHIVECLEANUP
-                            path to the pg_archivecleanup binary
+                            path to the pg_archivecleanup binary (default: None)
       --pgbase-path PGBASE_PATH
-                            target path to store the base backups
+                            target path to store the base backups (default:
+                            /var/backup/pgbase)
       --pgarchive-path PGARCHIVE_PATH
-                            path to the WAL archive
-      --keep KEEP           number of backups to keep
-      --user USER           username to run backups as
-      --verbose             enable verbose output
+                            path to the WAL archive (default:
+                            /var/backup/pgarchive)
+      --keep KEEP           number of backups to keep (default: 5)
+      --user USER           username to run backups as (default: postgres)
+      --verbose             enable verbose output (default: False)
 
 
-    pg-initslave.sh
-    Usage: ./pg-initslave.sh [-c CONFIG] [-p PORT] BACKUP-DATA-PATH TARGET
+    pg-initslave.sh --help
+    Usage: ./pg-initslave.sh [OPTIONS] BACKUP-DATA-PATH TARGET
+
+    OPTIONS
+            -c, --config CONFIG      Specify configuration file
+            -p, --port PORT          Specify non-standard SSH port
+            -h, --help               Show help text and exit
 
 # Examples
 

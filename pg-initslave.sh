@@ -40,7 +40,12 @@ EOF
 
 usage () {
     cat <<EOF
-Usage: ${BASH_SOURCE} [-c CONFIG] [-p PORT] BACKUP-DATA-PATH TARGET
+Usage: ${BASH_SOURCE} [OPTIONS] BACKUP-DATA-PATH TARGET
+
+OPTIONS
+        -c, --config CONFIG      Specify configuration file
+        -p, --port PORT          Specify non-standard SSH port
+        -h, --help               Show help text and exit
 EOF
 }
 
@@ -58,13 +63,17 @@ main () {
 
     while [[ "${#}" -gt 0 ]]; do
         case "${1}" in
-            -c)
+            -c|--config)
                 source "${2}"
                 shift
                 ;;
-            -p)
+            -p|--port)
                 port="${2}"
                 shift
+                ;;
+            -h|--help)
+                usage
+                return 0
                 ;;
             *)
                 if [[ -z "${backup_path:-}" ]]; then

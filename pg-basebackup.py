@@ -74,7 +74,8 @@ def last(l):
 
 def parse_args(argv):
     parser = argparse.ArgumentParser(
-        description='Create and maintain PostgreSQL base backups')
+        description='Create and maintain PostgreSQL base backups',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument('--pg-archivecleanup', required=True,
                         help='path to the pg_archivecleanup binary')
