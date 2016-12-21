@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python
 
 # PostgreSQL backup automation and cleannup tool
 # Copyright (C) 2016 Sergej Alikov <sergej@alikov.com>
