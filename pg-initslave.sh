@@ -103,9 +103,9 @@ main () {
 
     ssh "${sshargs[@]}" systemctl stop "${PG_SERVICE}"
 
-    rsync -a -X -A --exclude postgresql.conf --exclude pg_hba.conf --delete "${backup_path}" "${target}${port:+:${port}}:${PG_DATA}"
+    rsync -a -X -A --exclude postgresql.conf --exclude pg_hba.conf --delete "${backup_path%/}/" "${target}${port:+:${port}}:${PG_DATA%/}"
 
-    rsync -a -X -A --exclude "*.backup" "${PG_ARCHIVE}" "${target}${port:+:${port}}:${PG_DATA}/pg_xlog"
+    rsync -a -X -A --exclude "*.backup" "${PG_ARCHIVE%/}/" "${target}${port:+:${port}}:${PG_DATA}/pg_xlog"
 
     recovery_conf | ssh "${sshargs[@]}" "umask 0077; cat >${PG_DATA}/recovery.conf"
 
