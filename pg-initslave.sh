@@ -23,7 +23,6 @@ set -o pipefail
 # defaults
 PG_SERVICE='postgresql'
 PG_DATA='/var/lib/pgsql/9.2/data'
-PG_ARCHIVE='/var/backup/pgarchive'
 PG_MASTER=$(hostname --fqdn)
 PG_MASTER_PORT=5432
 
@@ -89,7 +88,7 @@ main () {
 
     if [[ -z "${backup_path:-}" ]]; then
         >&2 usage
-        abort "Please specify the location of the base backup"
+        abort "Please specify the location of the recent base backup"
     fi
 
     if [[ -z "${target:-}" ]]; then
@@ -104,8 +103,6 @@ main () {
     ssh "${sshargs[@]}" systemctl stop "${PG_SERVICE}"
 
     rsync -a -X -A --exclude postgresql.conf --exclude pg_hba.conf --delete "${backup_path%/}/" "${target}${port:+:${port}}:${PG_DATA%/}"
-
-    rsync -a -X -A --exclude "*.backup" "${PG_ARCHIVE%/}/" "${target}${port:+:${port}}:${PG_DATA}/pg_xlog"
 
     recovery_conf | ssh "${sshargs[@]}" "umask 0077; cat >${PG_DATA}/recovery.conf"
 
