@@ -34,7 +34,7 @@ BACKUP_DIR = '/var/backup'
 PGBASE_DEFAULT_DIR = join(BACKUP_DIR, 'pgbase')
 PGARCHIVE_DEFAULT_DIR = join(BACKUP_DIR, 'pgarchive')
 KEEP_DEFAULT = 5
-USER_DEFAULT='postgres'
+USER_DEFAULT = 'postgres'
 
 
 def run(args):
@@ -48,6 +48,7 @@ def run(args):
 
     return returncode, stdout, stderr
 
+
 def reverse_sorted_path_list(path, full=True):
     paths = reversed(sorted(os.listdir(path)))
     if full:
@@ -55,14 +56,18 @@ def reverse_sorted_path_list(path, full=True):
     else:
         return list(paths)
 
+
 def backup_files_only(path_list):
     return [f for f in path_list if isfile(f) and f.endswith('.backup')]
+
 
 def base_backups_only(path_list):
     return [p for p in path_list if isfile(join(p, 'backup_label'))]
 
+
 def generated_backup_name():
     return datetime.now().strftime('%Y%m%d%H%M%S')
+
 
 def last(l):
     try:
@@ -71,6 +76,7 @@ def last(l):
         return None
 
     return element
+
 
 def parse_args(argv):
     parser = argparse.ArgumentParser(
@@ -91,6 +97,7 @@ def parse_args(argv):
                         help='enable verbose output')
 
     return parser.parse_args(argv)
+
 
 def main(argv, logger):
     args = parse_args(argv)
