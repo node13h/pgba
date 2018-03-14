@@ -93,6 +93,8 @@ def parse_args(argv):
                         help='number of backups to keep')
     parser.add_argument('--user', default=USER_DEFAULT,
                         help='username to run backups as')
+    parser.add_argument('--compress', action='store_true', default=False,
+                        help='create a compressed backup')
     parser.add_argument('--verbose', action='store_true', default=False,
                         help='enable verbose output')
 
@@ -111,7 +113,12 @@ def main(argv, logger):
     backup_name = generated_backup_name()
     backup_path = join(args.pgbase_path, backup_name)
 
-    run(['pg_basebackup', '-D', backup_path, '-l', backup_name])
+    basebackup_args = ['pg_basebackup', '-D', backup_path, '-l', backup_name]
+
+    if args.compress:
+        basebackup_args.extend(['-F', 'tar', '--gzip'])
+
+    run(basebackup_args)
 
     base_backups_to_purge = base_backups_only(
         reverse_sorted_path_list(args.pgbase_path))[args.keep:]

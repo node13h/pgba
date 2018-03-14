@@ -97,6 +97,7 @@ main () {
         abort "Please specify the target ([user@]host)"
     fi
 
+    ! [[ -f "${backup_path}/base.tar.gz" ]] || abort "${backup_path} contains compressed backup. Please unpack first"
     [[ -f "${backup_path}/backup_label" ]] || abort "${backup_path} does not contain a PostgreSQL base backup"
 
     sshargs=("${target}" ${port:+-p "${port}"})
