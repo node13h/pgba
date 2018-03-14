@@ -39,7 +39,7 @@ EOF
 
 usage () {
     cat <<EOF
-Usage: ${BASH_SOURCE} [OPTIONS] BACKUP-DATA-PATH TARGET
+Usage: ${BASH_SOURCE[0]} [OPTIONS] BACKUP-DATA-PATH TARGET
 
 OPTIONS
         -c, --config CONFIG      Specify configuration file
@@ -58,11 +58,12 @@ quote () {
 }
 
 main () {
-    local arg port backup_path target sshargs
+    local port backup_path target sshargs
 
     while [[ "${#}" -gt 0 ]]; do
         case "${1}" in
             -c|--config)
+                # shellcheck disable=SC1090
                 source "${2}"
                 shift
                 ;;
@@ -112,6 +113,6 @@ main () {
 }
 
 
-if [[ "${0}" = "${BASH_SOURCE}" ]]; then
+if [[ "${0}" = "${BASH_SOURCE[0]}" ]]; then
     main "${@}"
 fi
