@@ -62,7 +62,7 @@ def backup_files_only(path_list):
 
 
 def base_backups_only(path_list):
-    return [p for p in path_list if isfile(join(p, 'backup_label'))]
+    return [p for p in path_list if isfile(join(p, 'backup_label')) or isfile(join(p, 'base.tar.gz'))]
 
 
 def generated_backup_name():
